@@ -5,6 +5,7 @@ class InvoiceLine:
         self.category = category
         self.unit_price_net = unit_price_net
 
+
 class Payment:
     def __init__(self, id, amount):
         id = id
