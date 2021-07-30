@@ -37,6 +37,8 @@ jobs:
         aws_region: us-west-2
         function_name: holvi-assignmnent
         zip_file: bundle.zip
+        memory_size: 0
+        timeout: 0
 #
 #
 #      - uses: aws-actions/setup-sam@v1
