@@ -34,8 +34,8 @@ jobs:
       with:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-        aws_region: eu-west-1
-        function_name: my-function
+        aws_region: us-west-2
+        function_name: holvi-assignmnent
         zip_file: bundle.zip
 #
 #
