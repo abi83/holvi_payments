@@ -29,15 +29,15 @@ jobs:
       with:
         args: zip -qq -r ./deploy.zip ./
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_ACCESS_KEY }}
         aws_region: us-west-2
 
-      - name: deploy
-        run: aws lambda update-function-code --function-name=holvi-assignmnent --zip-file=fileb://deploy.zip
+    - name: deploy
+      run: aws lambda update-function-code --function-name=holvi-assignmnent --zip-file=fileb://deploy.zip
 
 
 
