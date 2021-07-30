@@ -1,0 +1,9 @@
+.idea
+venv
+#cache
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
+
+#Default database
+db.sqlite3
