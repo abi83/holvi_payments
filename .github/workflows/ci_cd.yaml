@@ -27,18 +27,31 @@ jobs:
     - name: zip
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r ./bundle.zip ./
+        args: zip -qq -r ./deploy.zip ./
 
-    - name: default deploy
-      uses: appleboy/lambda-action@master
-      with:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_ACCESS_KEY }}
         aws_region: us-west-2
-        function_name: holvi-assignmnent
-        zip_file: bundle.zip
-        memory_size: 128
-        timeout: 10
+
+      - name: deploy
+        run: aws lambda update-function-code --function-name=holvi-assignmnent --zip-file=fileb://deploy.zip
+
+
+
+
+#    - name: default deploy
+#      uses: appleboy/lambda-action@master
+#      with:
+#        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        aws_secret_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+#        aws_region: us-west-2
+#        function_name: holvi-assignmnent
+#        zip_file: bundle.zip
+#        memory_size: 128
+#        timeout: 10
 #
 #
 #      - uses: aws-actions/setup-sam@v1
