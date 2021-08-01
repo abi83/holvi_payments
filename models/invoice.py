@@ -40,13 +40,16 @@ class Invoice:
 
     @property
     def categories_proportions(self) -> dict:
-        if self._categories_proportions is None:
-            self._categories_proportions = {
-                category: category_sum / self.invoice_sum
-                for category, category_sum in self.categories_sum.items()
-            }
+        # if self._categories_proportions is None:
+        self._categories_proportions = {
+            category: category_sum / sum((x for x in self.categories_limit.values()), start=Money(0))
+            for category, category_sum in self.categories_limit.items()
+        }
         return self._categories_proportions
 
     def payments_categorisations(self):
-        for payment in self.payments:
-            self.categories_limit = payment.categorise_payment(self.categories_proportions, self.categories_limit)
+        last = False
+        for index, payment in enumerate(self.payments, 1):
+            if index == len(self.payments): last = True
+            self.categories_limit = payment.categorise_payment(self.categories_proportions, self.categories_limit, last)
+            # breakpoint()
