@@ -22,7 +22,7 @@ jobs:
       run: flake8 .
 
     - name: Run tests with pytest
-      run: pytest
+      run: PYTHONPATH=. pytest
 
     - name: zip
       uses: montudor/action-zip@v0.1.0
