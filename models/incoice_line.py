@@ -1,5 +1,6 @@
 from .money import Money
 
+
 class InvoiceLine:
     def __init__(self, description, quantity, category, unit_price_net):
         self.description = description

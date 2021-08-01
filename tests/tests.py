@@ -1,6 +1,7 @@
 from invoice_tester import invoice_categorisation_tester
 from timer import timer
 
+
 def test_xs():
     invoice_categorisation_tester(1000, ranges='xs')
 
@@ -26,8 +27,8 @@ def main():
     invoice_categorisation_tester(100, ranges='xs')
     invoice_categorisation_tester(100, ranges='s')
     invoice_categorisation_tester(100, ranges='m')
-    invoice_categorisation_tester(100, ranges='l')
-    invoice_categorisation_tester(100, ranges='xl')
+    invoice_categorisation_tester(50, ranges='l')
+    invoice_categorisation_tester(20, ranges='xl')
 
 
 if __name__ == '__main__':

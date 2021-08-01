@@ -35,34 +35,46 @@ def invoice_categorisation_tester(runs_number: int, ranges=None) -> None:
             {
                 "description": fake.catch_phrase(),
                 "quantity": fake.random_int(min=1, max=3),
-                "category": categories[random.randint(0, len(categories)-1)],
-                "unit_price_net": max(round(random.random()*MAX_PRICE, 2), 0.01)
-             } for _ in range(random.randint(1, MAX_LINES_COUNT))
+                "category": categories[random.randint(0, len(categories) - 1)],
+                "unit_price_net": max(
+                    round(random.random() * MAX_PRICE, 2),
+                    0.01)
+            } for _ in range(random.randint(1, MAX_LINES_COUNT))
         ]
         invoice_lines_sum = round(
-            sum(line['unit_price_net']*line['quantity']
+            sum(line['unit_price_net'] * line['quantity']
                 for line in invoice_lines), 2)
         payment_number = random.randint(1, MAX_PAYMENTS_COUNT)
         payments = []
         sum_left = invoice_lines_sum
         for index in range(payment_number):
             payment_sum = max(
-                round(random.random()*invoice_lines_sum/2, 2), 0.01)
+                round(
+                    random.random() * invoice_lines_sum * 2 / payment_number,
+                    2),
+                0.01)
             if sum_left > payment_sum:
                 sum_left = round(sum_left - payment_sum, 2)
             else:
                 payment_sum = round(sum_left, 2)
                 sum_left = 0
             assert payment_sum > 0 and sum_left >= 0
-            payments.append({"id": index, "amount": payment_sum })
+            payments.append({"id": index, "amount": payment_sum})
             if sum_left == 0:
                 break
         invoice = Invoice(invoice_lines, payments)
         invoice.payments_categorisations()
         fully_payed_count[invoice.invoice_sum == invoice.payments_sum] += 1
         for payment in invoice.payments:
-            assert payment.calc_mistake() == Money(0), f'Very big mistake in {payment}'
+            assert payment.calc_mistake() == Money(0),\
+                f'Very big mistake in {payment}'
         assert (
-            invoice.invoice_sum - invoice.payments_sum - sum((remaining for remaining in invoice.categories_limit.values()), start=Money(0)) == Money(0)),\
-            'Incorrect remaining'
-    print(f'{ranges} tested {runs_number} times. Fully paid?: {fully_payed_count}')
+            invoice.invoice_sum
+            - invoice.payments_sum
+            - sum(
+                (remaining for remaining in invoice.categories_limit.values()),
+                start=Money(0))
+        ) == Money(0), 'Incorrect remaining'
+
+    print(f'{ranges} tested {runs_number} times. '
+          f'Fully paid?: {fully_payed_count}')

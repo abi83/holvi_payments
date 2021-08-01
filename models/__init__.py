@@ -1,2 +1,2 @@
 from .invoice import Invoice  # noqa
-from .money import Money  #noqa
+from .money import Money  # noqa
