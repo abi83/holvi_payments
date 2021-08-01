@@ -16,7 +16,7 @@ class Invoice:
     def payments_sum(self) -> Money:
         return sum(
             (payment.amount for payment in self.payments),
-            start=Money(0))
+            Money(0))
 
     @property
     def invoice_sum(self) -> Money:
@@ -25,7 +25,7 @@ class Invoice:
                 (
                     line.unit_price_net * line.quantity
                     for line in self.invoice_lines
-                ), start=Money(0))
+                ), Money(0))
         return self._invoice_sum_cached
 
     @property
@@ -46,7 +46,7 @@ class Invoice:
     def categories_proportions(self) -> dict:
         self._categories_proportions = {
             category: category_sum / sum(
-                (x for x in self.categories_limit.values()), start=Money(0))
+                (x for x in self.categories_limit.values()), Money(0))
             for category, category_sum in self.categories_limit.items()
         }
         return self._categories_proportions

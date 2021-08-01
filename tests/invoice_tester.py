@@ -73,7 +73,7 @@ def invoice_categorisation_tester(runs_number: int, ranges=None) -> None:
             - invoice.payments_sum
             - sum(
                 (remaining for remaining in invoice.categories_limit.values()),
-                start=Money(0))
+                Money(0))
         ) == Money(0), 'Incorrect remaining'
 
     print(f'{ranges} tested {runs_number} times. '

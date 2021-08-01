@@ -10,7 +10,7 @@ class Payment:
     def calc_mistake(self):
         return sum(
             (category['net_amount'] for category in self.categorisations),
-            start=Money(0)
+            Money(0)
         ) - self.amount
 
     def categorise_payment(self,
