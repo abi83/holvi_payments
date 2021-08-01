@@ -22,7 +22,7 @@ jobs:
       run: flake8 .
 
     - name: Run tests with pytest
-      run: PYTHONPATH=. pytest -n 3
+      run: PYTHONPATH=. pytest
 
   deploy:
     runs-on: ubuntu-latest
