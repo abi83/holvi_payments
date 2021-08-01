@@ -24,19 +24,19 @@ def my_tester(number):
             {
                 "description": fake.catch_phrase(),
                 "quantity": fake.random_int(min=1, max=100),
-                "category": categories[random.randint(0, len(categories)-1)],
-                "unit_price_net": fake.pyfloat(right_digits=2, positive=True,
-                                               max_value=100)
-             } for _ in range(random.randint(1, MAX_CATEGORIES_COUNT*3))
+                "category": categories[random.randint(0, len(categories) - 1)],
+                "unit_price_net": fake.pyfloat(right_digits=2,
+                                               positive=True, max_value=100)
+            } for _ in range(random.randint(1, MAX_CATEGORIES_COUNT * 3))
         ]
-        invoice_sum = sum(line['unit_price_net']*line['quantity']
+        invoice_sum = sum(line['unit_price_net'] * line['quantity']
                           for line in invoice_lines)
         payment_number = random.randint(1, MAX_PAYMENTS_COUNT)
         payments = []
         for index in range(payment_number):
             payment_amount = fake.pyfloat(
                 right_digits=2, positive=True,
-                min_value=int(invoice_sum/(4*payment_number))+1,
+                min_value=int(invoice_sum / (4 * payment_number)) + 1,
                 max_value=int(invoice_sum))
             # print('payment_amount', payment_amount)
             if invoice_sum > payment_amount:
