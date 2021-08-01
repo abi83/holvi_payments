@@ -4,17 +4,16 @@ import base64
 
 
 def lambda_handler(event, context):
-    print(event)
-
-    try:
-        base64_message = event.get('body')
-        base64_bytes = base64_message.encode('ascii')
-        message_bytes = base64.b64decode(base64_bytes)
-        message = message_bytes.decode('ascii')
-    except AttributeError:
-        message = 'Hello from NEW Lambda!'
+    if event.get('requestContext').get('http').get('method') == 'POST':
+        base64_body = event.get('body')
+        base64_bytes = base64_body.encode('ascii')
+        body_bytes = base64.b64decode(base64_bytes)
+        body = json.loads(body_bytes.decode('ascii'))
+        print('Parsed body:', body)
+    else:
+        print('GET')
 
     return {
         'statusCode': 200,
-        'body': json.dumps(message)
+        'body': json.dumps(body)
     }

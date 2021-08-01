@@ -24,11 +24,11 @@ def test_xl():
 
 @timer
 def main():
-    invoice_categorisation_tester(100, ranges='xs')
-    invoice_categorisation_tester(100, ranges='s')
-    invoice_categorisation_tester(100, ranges='m')
-    invoice_categorisation_tester(50, ranges='l')
-    invoice_categorisation_tester(20, ranges='xl')
+    invoice_categorisation_tester(5, ranges='xs')
+    invoice_categorisation_tester(5, ranges='s')
+    invoice_categorisation_tester(5, ranges='m')
+    invoice_categorisation_tester(3, ranges='l')
+    invoice_categorisation_tester(2, ranges='xl')
 
 
 if __name__ == '__main__':
