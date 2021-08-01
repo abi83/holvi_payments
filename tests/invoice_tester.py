@@ -2,7 +2,7 @@ import random
 
 from faker import Faker
 
-from models import Invoice
+from models import Invoice, Money
 
 
 def invoice_categorisation_tester(runs_number: int, ranges=None) -> None:
@@ -61,9 +61,8 @@ def invoice_categorisation_tester(runs_number: int, ranges=None) -> None:
         invoice.payments_categorisations()
         fully_payed_count[invoice.invoice_sum == invoice.payments_sum] += 1
         for payment in invoice.payments:
-            assert payment.calc_mistake() < 0.01, f'Very big mistake in {payment}'
+            assert payment.calc_mistake() == Money(0), f'Very big mistake in {payment}'
         assert (
-            invoice.invoice_sum - invoice.payments_sum
-            - sum(remaining for remaining in invoice.categories_limit.values()) < 0.01),\
+            invoice.invoice_sum - invoice.payments_sum - sum((remaining for remaining in invoice.categories_limit.values()), start=Money(0)) == Money(0)),\
             'Incorrect remaining'
     print(f'{ranges} tested {runs_number} times. Fully paid?: {fully_payed_count}')

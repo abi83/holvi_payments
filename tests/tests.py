@@ -23,10 +23,10 @@ def test_xl():
 
 @timer
 def main():
-    invoice_categorisation_tester(1000, ranges='xs')
-    invoice_categorisation_tester(1000, ranges='s')
-    invoice_categorisation_tester(1000, ranges='m')
-    invoice_categorisation_tester(500, ranges='l')
+    invoice_categorisation_tester(100, ranges='xs')
+    invoice_categorisation_tester(100, ranges='s')
+    invoice_categorisation_tester(100, ranges='m')
+    invoice_categorisation_tester(100, ranges='l')
     invoice_categorisation_tester(100, ranges='xl')
 
 
