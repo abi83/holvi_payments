@@ -4,6 +4,8 @@ import base64
 
 
 def lambda_handler(event, context):
+    print(event)
+
     try:
         base64_message = event.get('body')
         base64_bytes = base64_message.encode('ascii')
@@ -12,7 +14,6 @@ def lambda_handler(event, context):
     except AttributeError:
         message = 'Hello from NEW Lambda!'
 
-    # TODO implement
     return {
         'statusCode': 200,
         'body': json.dumps(message)
