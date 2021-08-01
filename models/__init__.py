@@ -1,1 +1,1 @@
-from .invoice import Invoice
+from .invoice import Invoice  # noqa

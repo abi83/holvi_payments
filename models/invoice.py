@@ -1,6 +1,7 @@
 from .payent import Payment
 from .incoice_line import InvoiceLine
 
+
 class Invoice:
     def __init__(self, invoice_lines, payments):
         self.invoice_lines = [InvoiceLine(**line) for line in invoice_lines]
