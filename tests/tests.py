@@ -1,5 +1,5 @@
 import random
-from datetime import datetime, timedelta
+from datetime import datetime
 from faker import Faker
 from models import Invoice
 
@@ -11,10 +11,11 @@ def timer(func):
         result = func(*args, **kw)
         te = datetime.now()
         print('Ended:', te.strftime("%H:%M:%S %f"))
-        execution_time = te-ts
+        execution_time = te - ts
         print('Execution time:', execution_time.microseconds, 'microseconds')
         return result
     return timed
+
 
 @timer
 def my_tester(number):
@@ -47,11 +48,11 @@ def my_tester(number):
         payments = []
         sum_left = invoice_lines_sum
         for index in range(payment_number):
-            payment_sum = fake.pyfloat(right_digits=2, positive=True,
-                                       min_value=int(invoice_lines_sum / (
-                                                   4.5 * payment_number)) + 1,
-                                       max_value=int(
-                                           invoice_lines_sum / 3))
+            payment_sum = fake.pyfloat(
+                right_digits=2,
+                positive=True,
+                min_value=int(invoice_lines_sum / (4.5 * payment_number)) + 1,
+                max_value=int(invoice_lines_sum / 3))
             if sum_left > payment_sum:
                 sum_left = round(sum_left - payment_sum, 2)
             else:

@@ -13,7 +13,8 @@ class Invoice:
     def invoice_sum(self):
         if self._invoice_sum_cached is None:
             self._invoice_sum_cached = round(sum([
-                line.unit_price_net * line.quantity for line in self.invoice_lines
+                line.unit_price_net * line.quantity
+                for line in self.invoice_lines
             ]), 2)
         return self._invoice_sum_cached
 
@@ -23,21 +24,30 @@ class Invoice:
             categories_sum = {}
             for element in self.invoice_lines:
                 try:
-                    categories_sum[element.category] += element.unit_price_net * element.quantity
+                    categories_sum[element.category] += (
+                            element.unit_price_net * element.quantity)
                 except KeyError:
-                    categories_sum[element.category] = element.unit_price_net * element.quantity
-            self._categories_proportions = {key: value/self.invoice_sum for key, value in categories_sum.items()}
+                    categories_sum[element.category] = (
+                            element.unit_price_net * element.quantity)
+            self._categories_proportions = {
+                key: value / self.invoice_sum
+                for key, value in categories_sum.items()
+            }
         return self._categories_proportions
 
     @staticmethod
     def fix_mistake(payment_obj, mistake):
         fixes_number = abs(int(mistake / 0.01))
         fixes_value = round(mistake / fixes_number, 2)
-        max_categories = [{'index': 0, 'net_amount': payment_obj['categorisations'][0]['net_amount']}]
+        max_categories = [{
+            'index': 0,
+            'net_amount': payment_obj['categorisations'][0]['net_amount']}]
         for index, item in enumerate(payment_obj['categorisations']):
-            if item['net_amount'] > max([el['net_amount'] for el in max_categories]):
-                max_categories.append({'index': index, 'net_amount': item['net_amount']})
-                max_categories.sort(key=lambda item: item['net_amount'])
+            if item['net_amount'] > max(
+                    [el['net_amount'] for el in max_categories]):
+                max_categories.append({
+                    'index': index, 'net_amount': item['net_amount']})
+                max_categories.sort(key=lambda x: x['net_amount'])
                 max_categories.pop(0)
         for index in [el['index'] for el in max_categories]:
             payment_obj['categorisations'][index]['net_amount'] = round(
@@ -46,7 +56,9 @@ class Invoice:
 
     @staticmethod
     def calculate_mistake(payment_obj, right_value):
-        return round(sum([category['net_amount'] for category in payment_obj['categorisations']]) - right_value, 2)
+        return round(sum([category['net_amount']
+                          for category in payment_obj['categorisations']])
+                     - right_value, 2)
 
     def payments_categorisations(self):
         categorisation = []
@@ -61,12 +73,15 @@ class Invoice:
                     for key, value in self.categories_proportions.items()
                 ],
             }
-            mistake = self.calculate_mistake(categorized_payment, payment.amount)
+            mistake = self.calculate_mistake(categorized_payment,
+                                             payment.amount)
             if abs(mistake) >= 0.01:
                 mistake_after_fix = mistake
                 while abs(mistake_after_fix) >= 0.01:
-                    categorized_payment = self.fix_mistake(categorized_payment, mistake_after_fix)
-                    mistake_after_fix = self.calculate_mistake(categorized_payment, payment.amount)
+                    categorized_payment = self.fix_mistake(categorized_payment,
+                                                           mistake_after_fix)
+                    mistake_after_fix = self.calculate_mistake(
+                        categorized_payment, payment.amount)
             self.validate_output(categorized_payment, payment.amount)
             categorisation.append(categorized_payment)
         return categorisation
