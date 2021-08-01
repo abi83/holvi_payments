@@ -1,24 +1,5 @@
-class Amount:
-    def __get__(self, instance, owner):
-        return self.value
-
-    def __set__(self, instance, value):
-        self.value = value
-
-
-class InvoiceLine:
-    def __init__(self, description, quantity, category, unit_price_net):
-        self.description = description
-        self.quantity = quantity
-        self.category = category
-        self.unit_price_net = unit_price_net
-
-
-class Payment:
-    def __init__(self, id, amount):
-        self.id = id
-        self.amount = amount
-
+from .payent import Payment
+from .incoice_line import InvoiceLine
 
 class Invoice:
     def __init__(self, invoice_lines, payments):

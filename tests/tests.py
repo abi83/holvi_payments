@@ -1,6 +1,6 @@
 import random
 from faker import Faker
-from models.models import Invoice
+from models import Invoice
 
 
 def test_case_fake():
@@ -59,3 +59,7 @@ def my_tester(number):
 
 def test_runner():
     my_tester(100)
+
+
+if __name__ == '__main__':
+    test_runner()
