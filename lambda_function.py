@@ -10,7 +10,7 @@ def lambda_handler(event, context):
         invoice = Invoice(
             body['invoice_lines'],
             body['payments']
-            )
+        )
         print('Invoice', invoice)
     else:
         body = 'Post requests are expected'
