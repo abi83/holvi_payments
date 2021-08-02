@@ -1,19 +1,23 @@
 import json
-
-import base64
+from models import Invoice
 
 
 def lambda_handler(event, context):
     if event.get('requestContext').get('http').get('method') == 'POST':
-        base64_body = event.get('body')
-        base64_bytes = base64_body.encode('ascii')
-        body_bytes = base64.b64decode(base64_bytes)
-        body = json.loads(body_bytes.decode('ascii'))
+        body = json.loads(event.get('body'))
         print('Parsed body:', body)
+        # invoice_lines = body['invoice_lines']
+        invoice = Invoice(
+            body['invoice_lines'],
+            body['payments']
+            )
+        print('Invoice', invoice)
     else:
+        body = 'Post requests are expected'
         print('GET')
 
     return {
         'statusCode': 200,
+        'headers': {"content-type": "application/json"},
         'body': json.dumps(body)
     }

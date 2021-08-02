@@ -6,4 +6,4 @@ class InvoiceLine:
         self.description = description
         self.quantity = quantity
         self.category = category
-        self.unit_price_net = Money(unit_price_net)
+        self.unit_price_net = Money(float(unit_price_net))
