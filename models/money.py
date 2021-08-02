@@ -2,7 +2,7 @@ class Money:
     MIN_AMOUNT = 0.01
 
     def __str__(self):
-        return f'Money: {self.value}'
+        return f'{self.value}'
 
     def __repr__(self):
         return self.__str__()
