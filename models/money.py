@@ -1,6 +1,11 @@
-class Money:
-    MIN_AMOUNT = 0.01
+MIN_AMOUNT = 0.01
 
+
+class Money:
+    """
+    A class represented 'Money' - with two decimal places. Only necessary
+    for this assigment magic methods implemented.
+    """
     def __str__(self):
         return f'{self.value}'
 
@@ -17,7 +22,7 @@ class Money:
         return Money(self.value - other.value)
 
     def __eq__(self, other):
-        return self.value - other.value < self.MIN_AMOUNT
+        return self.value - other.value < MIN_AMOUNT
 
     def __mul__(self, other):
         return Money(self.value * other)
@@ -30,6 +35,8 @@ class Money:
 
     def __truediv__(self, other):
         try:
+            # receive a proportion when dividing Money and Money
             return self.value / other.value
         except AttributeError:
+            # receive a part of Money, dividing Money by int or float
             return Money(self.value / other)

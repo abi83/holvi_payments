@@ -7,19 +7,19 @@ def test_xs():
 
 
 def test_s():
-    invoice_categorisation_tester(50, ranges='s')
+    invoice_categorisation_tester(75, ranges='s')
 
 
 def test_m():
-    invoice_categorisation_tester(20, ranges='m')
+    invoice_categorisation_tester(50, ranges='m')
 
 
 def test_l():
-    invoice_categorisation_tester(10, ranges='l')
+    invoice_categorisation_tester(25, ranges='l')
 
 
 def test_xl():
-    invoice_categorisation_tester(5, ranges='xl')
+    invoice_categorisation_tester(10, ranges='xl')
 
 
 @timer

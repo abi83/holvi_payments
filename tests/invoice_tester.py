@@ -5,12 +5,12 @@ from faker import Faker
 from models import Invoice, Money
 
 
-def invoice_categorisation_tester(runs_number: int, ranges=None) -> None:
+def invoice_categorisation_tester(runs_number: int, ranges) -> None:
     """
     Runs Invoice.payments_categorisations method runs_number times with
     random values depends on ranges value: XtraSmall, Small, Medium, Large or
     XtraLarge. Asserts if each categorised payment in invoice nad NO mistake in
-    categories summ
+    categories sum.
     Separately checks if Invoice.categories_limit is enough to cover remaining
     payments
     """
@@ -62,6 +62,7 @@ def invoice_categorisation_tester(runs_number: int, ranges=None) -> None:
             payments.append({"id": index, "amount": payment_sum})
             if sum_left == 0:
                 break
+
         invoice = Invoice(invoice_lines, payments)
         invoice.payments_categorisations()
         fully_payed_count[invoice.invoice_sum == invoice.payments_sum] += 1

@@ -4,8 +4,8 @@ from .money import Money
 class Payment:
     def __init__(self, id, amount):
         self.id = id
-        self.amount = Money(float(amount))
-        self.categorisations = []
+        self.amount: Money = Money(float(amount))
+        self.categorisations: list = []
 
     def calc_mistake(self):
         return sum(

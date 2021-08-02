@@ -5,8 +5,9 @@ from .money import Money
 
 class Invoice:
     def __init__(self, invoice_lines, payments):
-        self.invoice_lines = [InvoiceLine(**line) for line in invoice_lines]
-        self.payments = [Payment(**payment) for payment in payments]
+        self.invoice_lines: list = [InvoiceLine(**line)
+                                    for line in invoice_lines]
+        self.payments: list = [Payment(**payment) for payment in payments]
         self._invoice_sum_cached: Money = Money(0)
         self._categories_sum: dict = {}
         self._categories_proportions: dict = {}
