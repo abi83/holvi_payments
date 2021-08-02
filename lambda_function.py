@@ -19,7 +19,7 @@ def lambda_handler(event, context):
                  } for item in payment.categorisations]}
             for payment in invoice.payments]
     else:
-        output = 'Post requests with "application/json" data are expected'
+        output = 'Post requests with \"application/json\" data are expected'
 
     return {
         'statusCode': 200,
