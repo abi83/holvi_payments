@@ -5,19 +5,24 @@ from models import Invoice
 def lambda_handler(event, context):
     if event.get('requestContext').get('http').get('method') == 'POST':
         body = json.loads(event.get('body'))
-        print('Parsed body:', body)
-        # invoice_lines = body['invoice_lines']
         invoice = Invoice(
             body['invoice_lines'],
             body['payments']
         )
-        print('Invoice', invoice)
+        invoice.payments_categorisations()
+        output = [
+            {'id': payment.id,
+             'categorisation': [
+                 {
+                     'category': item['category'],
+                     'net_amount': str(item['net_amount'])
+                 } for item in payment.categorisations]}
+            for payment in invoice.payments]
     else:
-        body = 'Post requests are expected'
-        print('GET')
+        output = 'Post requests are expected'
 
     return {
         'statusCode': 200,
         'headers': {"content-type": "application/json"},
-        'body': json.dumps(body)
+        'body': json.dumps(output)
     }
