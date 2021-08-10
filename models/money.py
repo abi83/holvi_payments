@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 MIN_AMOUNT = 0.01
 
 
@@ -12,8 +14,8 @@ class Money:
     def __repr__(self):
         return self.__str__()
 
-    def __init__(self, value: float):
-        self.value = round(value, 2)
+    def __init__(self, value: (float, str)):
+        self.value = Decimal(value).quantize(Decimal('0.01'))
 
     def __add__(self, other):
         return Money(self.value + other.value)
